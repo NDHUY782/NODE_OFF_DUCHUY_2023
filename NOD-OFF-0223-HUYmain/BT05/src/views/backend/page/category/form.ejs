@@ -1,0 +1,52 @@
+<% const collection="category" ; const linkPrefix='' ; const linkThumb='' ; %>
+    <div class="card card-info card-outline">
+        <form action="/admin/category/form" method="POST" class="mb-0">
+            <div class="card-body">
+                <h1>
+                    <%= pageTitle%>
+                </h1>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label text-sm-right required">Name</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="text" id="name-input-form" name="name" class="form-control form-control-sm"
+                            value="<%= item.name%>">
+                    </div>
+                </div>
+                <!-- <div class="form-group row">
+                    <label for="slug" class="col-sm-2 col-form-label text-sm-right required">Slug</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="text" name="slug" id="slug-input-form" class="form-control form-control-sm">
+                    </div>
+                </div> -->
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label text-sm-right required">Ordering</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="text" name="ordering" class="form-control form-control-sm"
+                            value="<%= item.ordering%>">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-sm-2 col-form-label text-sm-right">Status</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <select id="status" name="status" class="custom-select custom-select-sm">
+                            <option value="novalue">Choose Status</option>
+                            <option value="active" <%=(item.status=="active" ? 'selected="selected"' : '' ) %> >
+                                Active</option>
+                            <option value="inactive" <%=(item.status=="inactive" ? 'selected="selected"' : '' ) %> >
+                                Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="col-12 col-sm-8 offset-sm-2">
+                    <button type="submit" class="btn btn-sm btn-success mr-1">
+                        Submit</button>
+                    <a href="/admin/category" class="btn btn-sm btn-danger mr-1">
+                        Cancel</a>
+                </div>
+            </div>
+        </form>
+
+    </div>

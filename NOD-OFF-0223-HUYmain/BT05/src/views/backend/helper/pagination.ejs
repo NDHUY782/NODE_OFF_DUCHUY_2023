@@ -1,0 +1,59 @@
+<% 
+    paginationHelper = (paginationObj, currentStatus, keyword) => {
+        let totalItem        = paginationObj.totalItem;
+        let totalItemPerPage = paginationObj.totalItemPerPage;
+        let totalPage        = Math.ceil(totalItem/totalItemPerPage);
+        let currentPage      = paginationObj.currentPage;
+        let pageRange        = paginationObj.pageRange;
+        let xhtmlPagination = '';
+
+        if(totalPage > 1){
+            let xhtmlStart = '', xhtmlLaquo = '', xhtmlPages = '', xhtmlRaquo = '', xhtmlEnd = '';
+            let link            = '/admin/category/status/' + currentStatus;
+            if(keyword !== '') link += '?keyword=' + keyword + '&page=';
+            else  link += '?page=';
+    
+            if (currentPage > 1){
+                xhtmlStart = `<li class="page-item"><a class="page-link" href="${link}1">start</a></li>`;
+                xhtmlLaquo = `<li class="page-item"><a class="page-link" href="${link}${currentPage - 1}">&laquo;</a></li>`;
+            }
+    
+            if (currentPage < totalPage){
+                xhtmlRaquo = `<li class="page-item"><a class="page-link" href="${link}${currentPage + 1}">&raquo;</a></li>`;
+                xhtmlEnd   = `<li class="page-item"><a class="page-link" href="${link}${totalPage}">end</a></li>`;
+            }
+    
+            let middle = Math.ceil(pageRange/2)
+            let min = currentPage - middle + 1
+            let max = min + pageRange - 1
+    
+            if(min <= 1){
+                min = 1
+                max = (pageRange <= totalPage) ? pageRange : totalPage
+            }
+    
+            if(min >= totalPage){
+                max = totalPage
+                min = ((max - pageRange + 1) >= 1) ? (max - pageRange + 1) : 1;
+            }
+    
+            for (let i = min; i <= max; i++){
+                if(i == currentPage){
+                    xhtmlPages += `<li class="page-item active"><a class="page-link" href="${link}${i}">${i}</a></li>`
+                } else {
+                    xhtmlPages += `<li class="page-item"><a class="page-link" href="${link}${i}">${i}</a></li>`
+                }
+            }
+    
+            xhtmlPagination = xhtmlStart + xhtmlLaquo + xhtmlPages + xhtmlRaquo + xhtmlEnd;
+        }
+
+        return `	
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    ${xhtmlPagination}
+                </ul>
+            </div>`;
+    }  
+%>
+

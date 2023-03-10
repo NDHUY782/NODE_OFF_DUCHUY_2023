@@ -1,0 +1,213 @@
+
+<% linkPrefix = 'admin' %>
+
+<% include ./../../helper/status.ejs %>
+<% include ./../../helper/filter-status.ejs %>
+<% include ./../../helper/pagination.ejs %>
+<% include ./../../helper/highlight-char.ejs %>
+
+<h3><%- locals.flash %></h3>
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1 class="m-0">Danh mục sản phẩm</h1>
+    </div>
+</div>
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h6 class="card-title">Search & Filter</h6>
+		<div class="card-tools">
+			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row justify-content-between">
+			<div class="mb-1">
+				<div class="btn-search">
+					<%- filterStatusHelper(statusFilter, keyword) %>
+				</div>
+			</div>
+			
+			<div class="mb-1">
+				<form action="<%= linkPrefix %>/category/status/<%= currentStatus%>" method="get">
+					<div class="input-group">
+						<input type="text" class="form-control form-control-sm" name="keyword" value="<%= keyword%>"" placeholder="Search for..." style="min-width: 300px">
+						<div class="input-group-append">
+							<a type="button" class="btn btn-sm btn-danger"  href="<%= linkPrefix %>/category/status/<%= currentStatus%>">Clear</a>
+							<button type="submit" class="btn btn-sm btn-info" id="btn-search">Search</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Content -->
+<form action="/admin/category/multipleAction" method="post" name="multipleForm" id = "multiForm">
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h4 class="card-title">List</h4>
+		<div class="card-tools">
+			<div class="btn-group">
+				<button type="button" class="btn btn-info" data-toggle="dropdown" aria-expanded="false">Change Status</button>
+				</>
+				<div class="dropdown-menu" role="menu" >
+					<button type="button" onClick="javascript:changeMultiStatus('active')" class="dropdown-item" data-toggle="modal" data-target="#modal-success">
+						Change to Active
+						</button>
+					<div class="dropdown-divider"></div>
+						<button type="button" onClick="changeMultiStatus('inactive')" class="dropdown-item" data-toggle="modal" data-target="#modal-danger">
+							Change to Inactive
+						</button>
+					</div>
+				</div>
+			<a href="admin/category/form" class="btn btn-warning" style="background-color: #F0AD4E; color: white; font-weight: 500;">Add New</a>
+			<button type="button" class="btn btn-danger" onClick="deleteMultiItems('<%= linkPrefix%>delete/multi')" data-toggle="modal" data-target="#modal-danger">
+				<i class="fas fa-trash-alt"></i>Delete Multi
+			</button>
+		</div>
+		<input type="hidden" name="action" id="inputHiddenAll" value="" >
+	</div>
+	<div class="card-body">
+		<!-- Control -->
+		<!-- <form action="" method="post" class="table-responsive" id="zt-form"> -->
+
+			<!-- List Content -->
+		
+			<table class="table table-bordered table-hover text-nowrap btn-table mb-0">
+				<thead>
+					<tr>
+						<th class="text-center">
+							<div class="custom-control custom-checkbox">
+								<input class="custom-control-input cbAll" type="checkbox" id="check-all">
+								<label for="check-all" class="custom-control-label"></label>
+							</div>
+						</th>
+						<th class="text-center">#</a></th>
+						<th class="text-center">Name</a></th>
+						<th class="text-center">Status</a></th>
+						<th class="text-center">Ordering</a></th>
+						<th class="text-center">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% items.forEach((value,index) => { %>
+                    <tr>
+						<td class="text-center">
+							<div class="custom-control custom-checkbox">
+								<input class="custom-control-input" type="checkbox" name="cid" id="check<%=index%>" value="<%= value.id%>">
+								<label for="check<%=index%>" class="custom-control-label"></label>
+							</div>
+						
+						</td>
+						<td class="text-center"><%= index+1 %></td>
+						<td class="text-center"><%- highlightHelper(value.name, keyword) %></td>
+
+						<td id="changeStatus-<%= value.id%>" class="text-center position-relative">
+							<%- statusHelper(value.status, value.id) %>
+						</td>
+
+						<td class="text-center position-relative" >
+							<input type="number" name="items-ordering" value="<%= value.ordering %>" class="text-center ordering">
+						</td>
+
+						<td class="text-center">
+							<a href="admin/category/form/<%= value.id%>" class="rounded-circle btn btn-sm btn-info " title="Edit">
+								<i class="fas fa-pencil-alt"></i>
+							</a>
+         
+							<a href="admin/category/delete/<%= value.id%>" class="rounded-circle btn btn-sm btn-danger">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+							<!-- <button type="button" class="rounded-circle btn btn-sm btn-danger">
+								<i class="fas fa-trash-alt"></i>
+							</button> -->
+						</td>
+					</tr>
+					<% })  %>
+				</tbody>
+			</table>
+		<!-- </form> -->
+	</div>
+	<div class="col-lg-12">
+		<!--Pagination-->
+		<%- paginationHelper(pagination, currentStatus, keyword) %>
+	    <!--Pagination-->
+	</div>
+</div>
+<form>
+
+<script>
+	    document.addEventListener('DOMContentLoaded', function () {
+        let deletedID;
+        let btnDeleted = document.getElementById('buttonDeleted');
+        let deleteForm = document.forms['deletedForm'];
+        let submitAllForm = document.forms['multipleForm'];
+        let btnCheckAll = $('#checkAll');
+        let btnCheck    = $('input[name="checkItem"]');
+        let btnSubmitAll = $('#buttonSubmitAll');
+        let isChecked;
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget) // Button that triggered the modal
+            deletedID = button.data('id');
+        });
+
+        btnDeleted.onclick = () => {
+            deleteForm.action = '/admin/items/' + deletedID + '?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        // button check all has been checked
+        btnCheckAll.change(function (){
+            isChecked = btnCheckAll.prop('checked');
+            if(isChecked === false){
+                $('input[class="ordering"]').removeAttr('name');
+            }
+            else {
+                $('input[class="ordering"]').attr('name', 'ordering');
+            }
+            btnCheck.prop('checked',isChecked);
+            disableSubmit();
+
+        })
+
+        btnCheck.change(function () {
+            let orderCheck = $(this).is(':checked');
+            if(orderCheck === true)
+            {
+                console.log("===");
+                $(this).parent('div').parent("td").parent("tr").find('.ordering').attr('name','ordering');
+            }
+            else {
+                $(this).parent('div').parent("td").parent("tr").find('.ordering').removeAttr('name');
+            }
+            isChecked = ($('input[name = "checkItem"]:checked').length === btnCheck.length);
+            btnCheckAll.prop('checked',isChecked);
+            disableSubmit();
+        })
+
+        function disableSubmit() {
+            isChecked= ($('input[name="checkItem"]:checked').length);
+            if(isChecked > 0)
+            {
+                btnSubmitAll.removeClass("disabled");
+            }
+            else{
+                btnSubmitAll.addClass(("disabled"));
+            }
+        }
+
+    })
+
+	function changeMultiStatus(status) {
+        let i = document.getElementById('inputHiddenAll').value = status;
+        document.getElementById('multiForm').submit();
+    }
+
+	function change(status){
+		console.log(status);
+	}
+</script>	
+

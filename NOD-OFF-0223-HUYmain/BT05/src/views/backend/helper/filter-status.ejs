@@ -1,0 +1,18 @@
+
+<% 
+filterStatusHelper = (statusFilter, keyword) => {
+    let xhtmlResult ='';
+    statusFilter.forEach((items) => { 
+        let link = "admin/category/status/" + items.value;
+        if(keyword !== "" && keyword !== undefined) {
+            link += "?keyword=" + keyword
+        }
+        xhtmlResult += ` <a href="${link}">
+                            <button type="button" class="btn btn-info ${items.class}">
+                                ${items.name.toUpperCase()} (<span>${items.count}</span>)
+                            </button>
+                        </a>`;
+    })
+    return xhtmlResult;
+} 
+%>
