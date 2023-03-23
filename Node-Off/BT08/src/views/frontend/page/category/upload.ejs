@@ -1,0 +1,24 @@
+<% const collection="category" ; const linkPrefix='' ; const linkThumb='' ; %>
+<h3><%- locals.flash %></h3>
+    <div class="card card-info card-outline">
+        <form action="/admin/category/upload" method="POST" class="mb-0" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group row">
+                    <label>Name</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="file" name="avatar">
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="" >
+            </div>
+            <div class="card-footer">
+                <div class="col-12 col-sm-8 offset-sm-2">
+                    <button type="submit" class="btn btn-sm btn-success mr-1">
+                        Submit</button>
+                    <a href="/admin/category" class="btn btn-sm btn-danger mr-1">
+                        Cancel</a>
+                </div>
+            </div>
+        </form>
+
+    </div>

@@ -1,0 +1,111 @@
+<% include ./../../helper/select-box-default.ejs %>
+<% include ./../../helper/image.ejs %>
+
+<% 
+	const collection = 'article'
+	const linkPrefix = systemConfig.prefixAdmin + `/${collection}/`
+    const folderUpload = 'uploads/items/'
+%>
+
+    <div class="card card-info card-outline">
+        <form action= <%= linkPrefix + 'form'%> method="POST" id ="form-category" enctype="multipart/form-data" name="form-upload">
+            <div class="card-body">
+                <h1>
+                    <%= pageTitle%>
+                </h1>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label text-sm-right required">Name</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="text" id="name" name="name" class="form-control form-control-sm" value="<%= item.name%>" placeholder="VD: Thể Thao">
+                        <span class="form-message" style = "color: red;"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ordering" class="col-sm-2 col-form-label text-sm-right required">Ordering</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="number" id="ordering" name="ordering" class="form-control form-control-sm" value="<%= item.ordering%>" placeholder="VD: 1">
+                        <span class="form-message" style = "color: red;"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-sm-2 col-form-label text-sm-right">Status</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <select id="status" name="status" class="custom-select custom-select-sm" >
+                            <option value="novalue">Choose Status</option>
+                            <option value="active" <%=(item.status=="active" ? 'selected="selected"' : '' ) %> >
+                                Active</option>
+                            <option value="inactive" <%=(item.status=="inactive" ? 'selected="selected"' : '' ) %> >
+                                Inactive</option>
+                        </select>
+                        <span class="form-message" style = "color: red;"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="category" class="col-sm-2 col-form-label text-sm-right">Category</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <%- selectBoxDefaultHelper('category', categoryItems, item.id_category) %>
+                        <span class="form-message" style = "color: red;"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="avatar" class="col-sm-2 col-form-label text-sm-right required">Avatar</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input type="file" id="avatar" name="avatar" class="form-control form-control-sm" value="abc" style="padding-bottom: 2rem" multiple>
+                    </div>
+                    <span class="form-message" style = "color: red;"></span>
+                    <div class="help-block with-errors text-red m-2" style="padding-left: 17%;">
+                        <%= (typeof errorArr !== "undefined")?errorArr.avatar:"" %>
+                    </div>
+                </div>
+                <div class="dropzone">
+                </div>
+                <% if(item.id !== undefined && item.id !== ''){ %>
+                    <div class="form-group row">
+                        <label></label>
+                        <div class="col-xs-12 col-sm-8">
+                            <% item.avatar.forEach((avatar) => { %>
+                                <%- imageHelper(folderUpload, avatar, 'img_Form') %>
+                            <% }) %>
+                        </div>
+                    </div>
+                <%}%>
+                <div class="form-group row">
+                    <label for="content_ck" class="col-sm-2 col-form-label text-sm-right required">Content</label>
+                    <textarea name="content" rows="2" id="content"><%= item.content%></textarea>
+                    <span class="form-message" style = "color: red;"></span>
+                </div>
+                <input type="hidden" name="id" value="<%= item.id%>" >
+                <input type="hidden" name="image_old" value="<%= item.avatar%>" >
+            </div>
+            <div class="card-footer">
+                <div class="col-12 col-sm-8 offset-sm-2">
+                    <button type="submit" class="btn btn-sm btn-success mr-1">
+                        Submit</button>
+                    <a href= <%= linkPrefix%> class="btn btn-sm btn-danger mr-1">
+                        Cancel</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+<script>
+    CKEDITOR.replace('content');
+</script>
+<!--Custom Validator-->
+<script src="/backend/js/customValidator.js"></script> 
+<script>
+    Validator({
+        form: '#form-category',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#name'),
+            Validator.minLength('#name', 6, 'Name phải có tối thiểu 6 ký tự'),
+            Validator.isRequired('#ordering'),
+            Validator.minMaxInt('#ordering', 1, 100, 'Ordering phải số nguyên và có giá trị từ 1 đến 100'),
+            Validator.isSelected('#status', 'Vui lòng chọn trường status'),
+            Validator.isSelected('#category', 'Vui lòng chọn trường category'),
+            // Validator.isRequired('#avatar'),
+        ],
+    });
+</script>

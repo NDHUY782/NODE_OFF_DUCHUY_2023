@@ -1,0 +1,19 @@
+
+<% 
+    statusHelper = (status, id, linkPrefix) => {
+        let xhtmlStatus = '';
+        let link = `${linkPrefix}change-status/` + id + "/" + status;
+        let classColor = "danger"
+        let iconColor = "ban"
+
+        if(status === "active"){
+            classColor = "success"
+            iconColor = "check"
+        } 
+
+        xhtmlStatus = `<a href="javascript:changeStatus('${link}')" class="rounded-circle btn btn-sm btn-${classColor}"><i class="fas fa-${iconColor}"></i></a>`
+
+        return xhtmlStatus;
+    }    
+%>
+

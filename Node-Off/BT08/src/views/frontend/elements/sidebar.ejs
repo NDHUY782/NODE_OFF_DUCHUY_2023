@@ -1,0 +1,71 @@
+<%  
+    let arrMenu = [
+        {parent: false, name: 'Dashboard', icon: 'ion-ios-keypad-outline', link: `#`},
+        {parent: true, child: [
+          { name: 'List', icon: 'ion-document-text', link: `${systemConfig.prefixAdmin}/category/`},
+          { name: 'Form', icon: 'ion-compose', link: `${systemConfig.prefixAdmin}/category/form`},
+        ], name: 'Category', icon: 'ion-clipboard', link: `#`},
+        {parent: true, child: [
+          { name: 'List', icon: 'ion-document-text', link: `${systemConfig.prefixAdmin}/article/`},
+          { name: 'Form', icon: 'ion-compose', link: `${systemConfig.prefixAdmin}/article/form`},
+        ], name: 'Article', icon: 'ion-earth', link: `#`},
+        {parent: false, child: [], name: 'Setting', icon: 'ion-earth', link: `#`},
+        {parent: false, child: [], name: 'Slider', icon: 'ion-earth', link: `#`},
+        {parent: false, child: [], name: 'Menu', icon: 'ion-earth', link: `#`},
+        
+    ];
+    
+    let xhtmlMenu = '';
+    arrMenu.forEach(menu => {
+      if(menu.parent == false){
+        xhtmlMenu += `<li class="nav-item">
+                          <a href="/${menu.link}" class="nav-link">
+                            <i class="${menu.icon}" style="margin-right: 10px;"></i>
+                            <p>
+                              ${menu.name}
+                            </p>
+                          </a>
+                     </li>`;
+      } else if(menu.parent == true){
+        let childHtml = ''
+        menu.child.forEach(function(childrenEntry){
+          childHtml+= `
+                      <li class="nav-item">
+                        <a href="${childrenEntry.link}" class="nav-link">
+                          <i class="${childrenEntry.icon}"></i>
+                          <p>${childrenEntry.name}</p>
+                        </a>
+                      </li>
+                      `
+        })
+        xhtmlMenu+=`
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="nav-icon ${menu.icon}"></i>
+                        <p>
+                          ${menu.name}
+                          <i class="fas fa-angle-left right"></i>
+                        </p>
+                      </a>
+                      <ul class="nav nav-treeview" style="display: none;">
+                            ${childHtml}
+                      </ul>
+                    </li>
+                `
+      }
+    });
+
+%>
+
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <a href="/admin" class="brand-link">
+    <img src="/backend/img/Kai_Avatar.jpg" alt="Admin Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">KAI_STORE</span>
+  </a>
+  <div class="sidebar">
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+             <%- xhtmlMenu %>
+  </div>
+</aside>

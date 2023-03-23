@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./elements/title.ejs'); -%>
+  <!-- Google Font: Source Sans Pro -->
+  <%- include('./elements/css.ejs'); -%>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+  <div class="wrapper">
+    <%- include('./elements/preloader.ejs'); -%>
+    <%- include('./elements/navbar.ejs'); -%>
+    <%- include('./elements/sidebar.ejs'); -%>
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <%- body %>
+        </div>
+      </div>
+    </div>
+    <%- include('./elements/footer.ejs'); -%>
+  </div>
+  <%- include('./elements/scripts.ejs'); -%>
+</body>
+
+</html>
