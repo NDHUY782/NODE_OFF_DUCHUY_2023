@@ -1,0 +1,19 @@
+
+<% 
+    sortListHelper = (linkPrefix, name, sortField, sortFieldCurrent, sortTypeCurrent) => {
+        let sort = (sortTypeCurrent == 'asc') ? 'desc' : 'asc';
+        let link = `${linkPrefix}sort/` + sortField + "/" + sort;
+        let icon = `<i class="fas fa-sort"></i>`
+        let iconSort = (sort == 'asc') ? 'down' : 'up';
+
+        if(sortField == sortFieldCurrent){
+            icon = `<i class="fas fa-sort-${iconSort}"></i>`
+        } 
+
+        let xhtml = `<th class="text-center"><a href="${link}" style="color: black;">${name} ${icon}</a></th>`
+
+        return xhtml;
+    }
+ 
+%>
+

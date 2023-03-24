@@ -1,0 +1,29 @@
+{
+  "name": "b02",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "alertifyjs": "^1.13.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-fileupload": "^1.4.0",
+    "express-flash-notification": "^0.5.0",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.15.0",
+    "http-errors": "~1.6.3",
+    "moment": "^2.29.4",
+    "mongoose": "^6.10.0",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.20",
+    "randomstring": "^1.2.3",
+    "rss-parser": "^3.12.0"
+  }
+}

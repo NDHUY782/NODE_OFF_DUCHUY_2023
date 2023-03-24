@@ -1,0 +1,14 @@
+
+<% 
+    selectBoxAjaxHelper = (name, categoryItems, optionSelected = '', id, linkPrefix) => {
+        let xhtml = '';
+        let link = `${linkPrefix}change-category/` + id + "/";
+        categoryItems.forEach((item) => {
+            let selected = (item.id == optionSelected) ? `selected="selected"` : '';
+            xhtml += `<option id="inputCategory" value="${item.id}" ${selected}>${item.name}</option>`
+        })
+
+        return `<select onchange="changeCategory('${link}', this)" id="${name}" name="${name}" class="custom-select custom-select-sm">${xhtml}</select>`;
+    }    
+%>
+

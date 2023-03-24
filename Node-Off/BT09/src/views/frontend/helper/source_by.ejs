@@ -1,0 +1,10 @@
+
+<% 
+    sourceByHelper = (user_name = ' ', time = '') => {
+        xhtmlStatus = `<span class="fa fa-user" aria-hidden="true"></span> ${user_name} </br>
+                       <span class="fa fa-calendar" aria-hidden="true"></span> ${moment(time).format(systemConfig.format_long_time)}`
+
+        return xhtmlStatus;
+    }    
+%>
+
