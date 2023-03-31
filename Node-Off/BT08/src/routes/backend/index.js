@@ -16,4 +16,7 @@ router.use('/setting',require('./setting'))
 router.use('/menu',require('./menu'))
 router.use('/slider',require('./slider'))
 
+
+router.use('/authen',require('./authen'))
+
 module.exports = router

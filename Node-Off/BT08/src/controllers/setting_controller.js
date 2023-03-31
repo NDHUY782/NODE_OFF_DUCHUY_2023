@@ -1,13 +1,21 @@
-const routerName = 'article';
+const routerName = 'setting';
 const renderName = `backend/page/${routerName}/`;
-const Parser = require('rss-parser');
-const parser = new Parser();
-var fs = require('fs');
+const SettingService = require(`${__path_services}/setting_service`);
 
 module.exports = {
     
-    list: async (req , res , next) => {
-        res.render('backend/page/setting/index.ejs')
+    
+    getSetting: async (req , res , next) => {
+        let { data, pageTitle}  = await SettingService.getSetting(req, res)
+        res.render(`${renderName}form` , {
+            items : data,
+            pageTitle
+        })
     },
+
+    saveSetting: async (req , res , next) => {
+        await SettingService.saveSetting(req, res)
+    },
+    
     
 }

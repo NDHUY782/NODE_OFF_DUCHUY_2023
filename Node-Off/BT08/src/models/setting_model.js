@@ -1,31 +1,41 @@
 const { Schema , model } = require("mongoose")
 
 const SettingModel = new Schema({
-    name : {
-        type : String,
+    footer:{
+        copyright: {
+            type: String
+        },
+        phone: {
+            type: String
+        },
+        location: {
+            type: String
+        },
+        email: {
+            type: String
+        },
     },
-    status : {
-        type : String,
+    social:{
+        facebook: {
+            type: String
+        },
+        zalo: {
+            type: String
+        },
+        instagram: {
+            type: String
+        },
     },
-    ordering : {
-        type : Number,
-    },
-    content : {
-        type : String,
-    },
-    created: {
-        user_id: Number,
-        user_name: String,
-        time: Date,
-    },
-    modified: {
-        user_id: Number,
-        user_name: String,
-        time: Date,
+    logo:{
+        brand: {
+            type: String
+        },
+        logo: {
+            type: String
+            
+        },
     }
-}, {
-    timestamps : true
 }) 
 
 
-module.exports = model('setting' , SettingModel)
+module.exports = model('settings' , SettingModel)

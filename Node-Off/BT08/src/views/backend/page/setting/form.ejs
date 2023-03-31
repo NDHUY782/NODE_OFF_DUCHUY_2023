@@ -1,0 +1,84 @@
+<% include ./../../helper/image.ejs %>
+<% 
+	const collection = 'setting'
+	const linkPrefix = systemConfig.prefixAdmin + `/${collection}/`
+    const folderUpload = 'uploads/logo/'
+    const value = items[0]
+%>
+
+<div style="margin: 5%">
+    <div class="button_setting"> SETTING
+        <!-- <button type="button" class="btn btn-default btn_setting" id="footer">
+            Footer
+        </button>
+        <button type="button" class="btn btn-primary btn_setting" id="social">
+            Social
+        </button>
+        <button type="button" class="btn btn-primary btn_setting" id="logo">
+            Logo
+        </button> -->
+    </div>
+    <div class="card card-danger">
+        <form action= <%= linkPrefix + 'form'%> method="POST" class="mb-0" id ="form-category" enctype="multipart/form-data">
+            <div class="card-body" id = "footer">
+                <div class="form-group" >
+                    <label for="Copyright">Copyright</label>
+                    <input type="text" class="form-control" name="Copyright" value="<%= value.footer.copyright%>">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" class="form-control" name="phone" value="<%= value.footer.phone%>">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" name="location" value="<%= value.footer.location%>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" name="email" value="<%= value.footer.email%>">
+                </div>
+            </div>
+
+            <div class="card-body" id = "social" >
+                <div class="form-group" >
+                    <label for="facebook">Facebook</label>
+                    <input type="url" class="form-control" name="facebook" value="<%= value.social.facebook%>">
+                </div>
+                <div class="form-group" >
+                    <label for="zalo">Zalo</label>
+                    <input type="url" class="form-control" name="zalo" value="<%= value.social.zalo%>">
+                </div>
+                <div class="form-group" >
+                    <label for="instagram">Instagram</label>
+                    <input type="url" class="form-control" name="instagram" value="<%= value.social.instagram%>">
+                </div>
+            </div>
+
+            <div class="card-body" id = "logo" >
+                <div class="form-group">
+                    <label for="name_brand">Name Brand</label>
+                    <input type="text" class="form-control" name="name_brand" value="<%= value.logo.brand%>">
+                </div>
+                <div class="form-group">
+                    <label for="logo">Logo</label>
+                    <input type="file" id="logo" name="logo" class="form-control form-control-sm" value="abc" style="padding-bottom: 2rem">
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <%- imageHelper(folderUpload, value.logo.logo, 'img_Form') %>
+                </div>
+                <input type="hidden" name="image_old" value="<%= value.logo.logo%>" >
+                <input type="hidden" name="id" value="<%= value.id%>" >
+            </div>
+
+            <div class="card-footer">
+                <div class="button_submit col-12 col-sm-8 offset-sm-2">
+                    <button type="submit" class="btn btn-sm btn-success mr-1">
+                        Submit</button>
+                    <a href='#' class="btn btn-sm btn-danger mr-1">
+                        Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

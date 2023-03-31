@@ -1,9 +1,8 @@
-
 <% 
     imageHelper = (folder, imageName, className = 'img_List') => {  
         let xhtml = '';
         if(imageName == null){
-            imageName = 'no-avatar.png'
+            imageName = 'duchuy.png'
         }
         xhtml = `<img id="imgUpload" class="${className}" src="${folder + imageName}" alt="${imageName}"/>`
         return xhtml;

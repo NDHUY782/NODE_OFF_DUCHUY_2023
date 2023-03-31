@@ -1,10 +1,12 @@
 .img_List {
     height: 40px;
-  }
+}
+
 .img_Form {
     height: 100px;
     padding-left: 25%;
-  }  
+}  
+
 .img_List img {
     position: absolute;
     top: 50%;
@@ -13,4 +15,18 @@
     height: auto;
     transform: translate(-50%, -50%);
     transition: all 5s;
+}
+
+button.btn_setting{
+  width: 150px;
+}
+
+div.button_setting{
+  margin: 0 auto;
+  width: 1000px;
+  text-align:center;
+}
+
+div.button_submit{
+  margin-left:0%;
 }
