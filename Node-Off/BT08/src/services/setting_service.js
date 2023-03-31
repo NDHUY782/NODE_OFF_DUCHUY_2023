@@ -21,16 +21,6 @@ module.exports = {
         uploadAvatar(req, res, async (err) => {
             req.body = JSON.parse(JSON.stringify(req.body))
             let item = Object.assign(req.body)
-
-            // onst {brand,logo }     = req.body 
-
-            // const Logo_changr = await SettingModel.create({brand,logo }  )
-            
-            // res.send({
-                
-            //     Logo_changr
-            // }) 
-
             if (err) {
                 let errorArr = {}
                 let data = {}
@@ -48,11 +38,11 @@ module.exports = {
                 });
                 return;
             } else {
-                if(req.file == undefined){
+                if(req.files == undefined){
                     item.logo = item.image_old;
                 } else {
-                    item.logo = req.file.filename;
-                    fileHelpers.remove('src/public/uploads/logo/')
+                    item.logo = req.files[0].filename;
+                    // fileHelpers.remove('src/public/uploads/logo/')
                 }
                 id = item.id;
 
@@ -74,7 +64,7 @@ module.exports = {
                 data.logo.brand       = item.name_brand
                 data.logo.logo        = item.logo
 
-                SettingModel.updateOne({ _id: id }, data, (err, result) => {
+                SettingModel.findByIdAndUpdate({ _id: id }, data, (err, result) => {
                     req.flash('success', notify.EDIT_SUCCESS, false)
                     res.redirect('/admin/setting/')
                 });
